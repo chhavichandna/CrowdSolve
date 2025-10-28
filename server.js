@@ -635,7 +635,8 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 dotenv.config();
 
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
