@@ -577,58 +577,57 @@
 // const PORT = 5000;
 // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-
 // server.js
-import express from 'express';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import path from 'path';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import multer from 'multer';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import path from "path";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import multer from "multer";
+import fs from "fs";
+import { fileURLToPath } from "url";
 
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-// const cors = require('cors');
-// const multer = require('multer');
-// const path = require('path');
-// const fs = require('fs');
-// import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 
 const app = express();
 
 // ====== Middleware ======
-app.use(cors({
-  origin: ['http://localhost:5173', 'https://crowd-solve-ten.vercel.app'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://crowd-solve-ten.vercel.app",
+      "https://crowdsolve-m96y.onrender.com",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
 // ✅ Make sure uploads folder exists
-if (!fs.existsSync('uploads')) {
-  fs.mkdirSync('uploads');
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
 }
 
 // ✅ Serve uploaded images
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ====== Database Connection ======
-mongoose.connect('mongodb+srv://chhavichandna_db_user:vv7ROJtc1qUU8p5q@crowdsolve.jqmowur.mongodb.net/?appName=crowdsolve', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => console.log(err));
+mongoose
+  .connect(
+    "mongodb+srv://chhavichandna_db_user:vv7ROJtc1qUU8p5q@crowdsolve.jqmowur.mongodb.net/?appName=crowdsolve",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.log(err));
 
 // ====== Schemas ======
 const userSchema = new mongoose.Schema({
@@ -637,90 +636,90 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 const commentSchema = new mongoose.Schema({
   text: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
 });
 
 const answerSchema = new mongoose.Schema({
   answer: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   comments: [commentSchema],
   createdAt: { type: Date, default: Date.now },
 });
 
 const questionSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   title: String,
   description: String,
   location: String,
   image: String,
-  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   createdAt: { type: Date, default: Date.now },
   answers: [answerSchema],
 });
 
-const Question = mongoose.model('Question', questionSchema);
+const Question = mongoose.model("Question", questionSchema);
 
 // ====== Auth Middleware ======
 const authMiddleware = (req, res, next) => {
-  const authHeader = req.header('Authorization');
+  const authHeader = req.header("Authorization");
   if (!authHeader)
-    return res.status(401).json({ msg: 'No token, authorization denied' });
+    return res.status(401).json({ msg: "No token, authorization denied" });
 
   try {
-    const token = authHeader.startsWith('Bearer ')
+    const token = authHeader.startsWith("Bearer ")
       ? authHeader.slice(7)
       : authHeader;
-    const decoded = jwt.verify(token, 'secret');
+    const decoded = jwt.verify(token, "secret");
     req.user = decoded;
     next();
   } catch (err) {
-    res.status(400).json({ msg: 'Token is not valid' });
+    res.status(400).json({ msg: "Token is not valid" });
   }
 };
 
 // ====== Multer Setup ======
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+  destination: (req, file, cb) => cb(null, "uploads/"),
+  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
 });
 const upload = multer({ storage });
 
 // ====== Routes ======
 
 // Register
-app.post('/api/auth/register', async (req, res) => {
+app.post("/api/auth/register", async (req, res) => {
   const { username, email, password } = req.body;
   try {
     const userExist = await User.findOne({ email });
-    if (userExist) return res.status(400).json({ msg: 'User already exists' });
+    if (userExist) return res.status(400).json({ msg: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ msg: 'User registered successfully' });
+    res.status(201).json({ msg: "User registered successfully" });
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }
 });
 
 // Login
-app.post('/api/auth/login', async (req, res) => {
+app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: 'User does not exist' });
+    if (!user) return res.status(400).json({ msg: "User does not exist" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials' });
+    if (!isMatch) return res.status(400).json({ msg: "Invalid Credentials" });
 
-    const token = jwt.sign({ id: user._id }, 'secret', { expiresIn: '2h' });
+    const token = jwt.sign({ id: user._id }, "secret", { expiresIn: "2h" });
     res.json({ token, user: { username: user.username, email: user.email } });
   } catch (err) {
     res.status(500).json({ msg: err.message });
@@ -728,40 +727,49 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // Post Question
-app.post('/api/questions', authMiddleware, upload.single('image'), async (req, res) => {
-  const { title, description, location } = req.body;
+app.post(
+  "/api/questions",
+  authMiddleware,
+  upload.single("image"),
+  async (req, res) => {
+    const { title, description, location } = req.body;
 
-  try {
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+    try {
+      const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
-    const newQuestion = new Question({
-      userId: req.user.id,
-      title,
-      description,
-      location,
-      image: imagePath,
-    });
+      const newQuestion = new Question({
+        userId: req.user.id,
+        title,
+        description,
+        location,
+        image: imagePath,
+      });
 
-    await newQuestion.save();
-    res.status(201).json({ msg: 'Question added successfully', newQuestion });
-  } catch (err) {
-    res.status(500).json({ msg: err.message });
+      await newQuestion.save();
+      res
+        .status(201)
+        .json({ msg: "Question added successfully", newQuestion });
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
   }
-});
+);
 
 // Get All Questions (Public Page)
-app.get('/api/questions/all', authMiddleware, async (req, res) => {
+app.get("/api/questions/all", authMiddleware, async (req, res) => {
   try {
     const questions = await Question.find()
-      .populate('userId', 'username')
-      .populate('answers.user', 'username')
-      .populate('answers.comments.user', 'username')
+      .populate("userId", "username")
+      .populate("answers.user", "username")
+      .populate("answers.comments.user", "username")
       .sort({ createdAt: -1 });
 
-    // ✅ Use full Render URL
-    const formatted = questions.map(q => ({
+    // ✅ Full Render URL for image
+    const formatted = questions.map((q) => ({
       ...q._doc,
-      image: q.image ? `https://crowdsolve-m96y.onrender.com${q.image}` : null,
+      image: q.image
+        ? `https://crowdsolve-m96y.onrender.com${q.image}`
+        : null,
     }));
 
     res.json(formatted);
@@ -770,11 +778,11 @@ app.get('/api/questions/all', authMiddleware, async (req, res) => {
   }
 });
 
-// ✅ --- Add this block at the END of file (for React Router refresh fix) ---
-const distPath = path.join(__dirname, 'dist');
+// ====== Serve Frontend (Vite Dist) ======
+const distPath = path.join(__dirname, "dist");
 app.use(express.static(distPath));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
 });
 
 // ====== Start Server ======
