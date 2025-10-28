@@ -646,11 +646,17 @@ const cloudinary = require('cloudinary').v2;
 const app = express();
 
 // ====== Middleware ======
-app.use(cors({
-  origin: "*", 
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",          
+      "https://crowdsolve-2.onrender.com" 
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(express.json());
 
 // ====== Cloudinary Config ======
