@@ -266,7 +266,7 @@ const Common = () => {
     if (!text || !text.trim()) return;
     try {
       await axios.post(
-        `http://https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answer`,
+        `https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answer`,
         { answer: text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -281,7 +281,7 @@ const Common = () => {
   const handleLikeAnswer = async (qId, ansId) => {
     try {
       await axios.post(
-        `http://https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/like`,
+        `https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -298,7 +298,7 @@ const Common = () => {
     if (!text) return;
     try {
       await axios.post(
-        `http://https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/comment`,
+        `https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/comment`,
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );

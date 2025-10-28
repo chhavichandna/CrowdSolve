@@ -9,7 +9,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-   const res= await axios.post('http://https://crowdsolve-m96y.onrender.com/api/auth/login', form);
+   const res= await axios.post('https://crowdsolve-m96y.onrender.com/api/auth/login', form);
    localStorage.setItem('token',res.data.token)
       navigate('/common');
     } catch (error) {

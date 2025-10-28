@@ -225,7 +225,7 @@ const PDash = () => {
   const fetchQuestions = async () => {
     if (!token) return; // prevent request if no token
     try {
-      const res = await axios.get('http://https://crowdsolve-m96y.onrender.com/api/questions', {
+      const res = await axios.get('https://crowdsolve-m96y.onrender.com/api/questions', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setQuestions(res.data);
@@ -258,12 +258,12 @@ const PDash = () => {
 
     try {
       if (editId) {
-        await axios.put(`http://https://crowdsolve-m96y.onrender.com/api/questions/${editId}`, data, {
+        await axios.put(`https://crowdsolve-m96y.onrender.com/api/questions/${editId}`, data, {
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
         });
         setEditId(null);
       } else {
-        await axios.post('http://https://crowdsolve-m96y.onrender.com/api/questions', data, {
+        await axios.post('https://crowdsolve-m96y.onrender.com/api/questions', data, {
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
         });
       }
@@ -291,7 +291,7 @@ const PDash = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this question?')) return;
     try {
-      await axios.delete(`http://https://crowdsolve-m96y.onrender.com/api/questions/${id}`, {
+      await axios.delete(`https://crowdsolve-m96y.onrender.com/api/questions/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchQuestions();
@@ -305,7 +305,7 @@ const PDash = () => {
   const handleLikeAnswer = async (qId, ansId) => {
     try {
       await axios.post(
-        `http://https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/like`,
+        `https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -322,7 +322,7 @@ const PDash = () => {
     if (!text) return;
     try {
       await axios.post(
-        `http://https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/comment`,
+        `https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/comment`,
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );

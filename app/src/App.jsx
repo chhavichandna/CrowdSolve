@@ -4,6 +4,8 @@ import Register from './Register'
 import Login from './Login'
 import PDash from './PDash'
 import Common from './Common'
+import './App.css';
+
 
 function App() {
  const isAuth = localStorage.getItem('token')
