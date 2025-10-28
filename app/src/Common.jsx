@@ -246,7 +246,7 @@ const Common = () => {
   const fetchAllQuestions = async () => {
     try {
       if (!token) return setQuestions([]);
-      const res = await axios.get('http://localhost:5000/api/questions/all', {
+      const res = await axios.get('https://crowdsolve-m96y.onrender.com/api/questions/all', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setQuestions(res.data);
@@ -266,7 +266,7 @@ const Common = () => {
     if (!text || !text.trim()) return;
     try {
       await axios.post(
-        `http://localhost:5000/api/questions/${qId}/answer`,
+        `http://https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answer`,
         { answer: text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -281,7 +281,7 @@ const Common = () => {
   const handleLikeAnswer = async (qId, ansId) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/questions/${qId}/answers/${ansId}/like`,
+        `http://https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -298,7 +298,7 @@ const Common = () => {
     if (!text) return;
     try {
       await axios.post(
-        `http://localhost:5000/api/questions/${qId}/answers/${ansId}/comment`,
+        `http://https://crowdsolve-m96y.onrender.com/api/questions/${qId}/answers/${ansId}/comment`,
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
