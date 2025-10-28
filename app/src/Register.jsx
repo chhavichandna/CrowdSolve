@@ -9,7 +9,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-   await axios.post('https://crowdsolve-m96y.onrender.com/api/auth/register', form);
+   await axios.post('https://crowdsolve-1-2pvf.onrender.com/api/auth/register', form);
       navigate('/login');
     } catch (error) {
       alert('Registration Failed');
