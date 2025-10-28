@@ -579,17 +579,28 @@
 
 
 // server.js
-const express = require('express');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const cors = require('cors');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import path from 'path';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import multer from 'multer';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
+
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
+// const cors = require('cors');
+// const multer = require('multer');
+// const path = require('path');
+// const fs = require('fs');
+// import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 
 const app = express();
 
