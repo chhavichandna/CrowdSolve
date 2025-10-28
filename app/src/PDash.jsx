@@ -428,13 +428,21 @@ const PDash = () => {
             <h2 className="text-xl font-bold">{q.title}</h2>
             <p className="text-gray-300 mt-1">{q.description}</p>
             <p className="text-gray-400 text-sm mt-1">Location: {q.location}</p>
-            {q.image && (
+            {/* {q.image && (
               <img
                 src={q.image}
                 alt={q.title}
                 className="w-full max-h-60 object-cover rounded mt-2"
               />
-            )}
+            )} */}
+            {q.image && (
+  <img
+    src={`https://crowdsolve-m96y.onrender.com${q.image}`}
+    alt={q.title}
+    className="w-full max-h-60 object-cover rounded mt-2"
+  />
+)}
+
             <p className="text-xs text-gray-500 mt-2">{new Date(q.createdAt).toLocaleString()}</p>
             <div className="flex gap-2 mt-2">
               <button

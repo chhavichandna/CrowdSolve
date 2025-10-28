@@ -431,7 +431,7 @@ const Common = () => {
                 <p className="text-gray-300 mb-1">{q.description}</p>
                 <p className="text-gray-400 text-sm mb-2">Location: {q.location || 'Not specified'}</p>
 
-                {q.image && (
+                {/* {q.image && (
                   <div className="w-full flex justify-center mb-4">
                     <img
                       src={q.image}
@@ -439,7 +439,18 @@ const Common = () => {
                       className="w-full max-h-60 object-cover rounded-md shadow-sm"
                     />
                   </div>
-                )}
+                )} */}
+
+{q.image && (
+  <div className="w-full flex justify-center mb-4">
+    <img
+      src={`https://crowdsolve-m96y.onrender.com${q.image}`}
+      alt={q.title}
+      className="w-full max-h-60 object-cover rounded-md shadow-sm"
+    />
+  </div>
+)}
+
 
                 <p className="text-xs text-gray-400 mb-3">
                   Posted by <b>{q.userId?.username || 'Unknown'}</b> at {new Date(q.createdAt).toLocaleString()}
