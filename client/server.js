@@ -649,8 +649,9 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",          
-      "https://crowdsolve-2.onrender.com" 
+      "http://localhost:5173",    
+      "https://crowd-solve-6gbp.vercel.app"    
+     
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
