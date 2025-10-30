@@ -319,7 +319,7 @@ const PDash = () => {
   const fetchQuestions = async () => {
     if (!token) return;
     try {
-      const res = await axios.get('https://crowdsolve-1-2pvf.onrender.com/api/questions', {
+      const res = await axios.get('https://crowd-solve-sepia.vercel.app/api/questions', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setQuestions(res.data);
@@ -353,7 +353,7 @@ const PDash = () => {
     try {
       if (editId) {
         await axios.put(
-          `https://crowdsolve-1-2pvf.onrender.com/api/questions/${editId}`,
+          `https://crowd-solve-sepia.vercel.app/api/questions/${editId}`,
           data,
           {
             headers: {
@@ -365,7 +365,7 @@ const PDash = () => {
         setEditId(null);
       } else {
         await axios.post(
-          'https://crowdsolve-1-2pvf.onrender.com/api/questions',
+          'https://crowd-solve-sepia.vercel.app/api/questions',
           data,
           {
             headers: {
@@ -401,7 +401,7 @@ const PDash = () => {
     if (!window.confirm('Delete this question?')) return;
     try {
       await axios.delete(
-        `https://crowdsolve-1-2pvf.onrender.com/api/questions/${id}`,
+        `https://crowd-solve-sepia.vercel.app/api/questions/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -417,7 +417,7 @@ const PDash = () => {
   const handleLikeAnswer = async (qId, ansId) => {
     try {
       await axios.post(
-        `https://crowdsolve-1-2pvf.onrender.com/api/questions/${qId}/answers/${ansId}/like`,
+        `https://crowd-solve-sepia.vercel.app/api/questions/${qId}/answers/${ansId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -434,7 +434,7 @@ const PDash = () => {
     if (!text) return;
     try {
       await axios.post(
-        `https://crowdsolve-1-2pvf.onrender.com/api/questions/${qId}/answers/${ansId}/comment`,
+        `https://crowd-solve-sepia.vercel.app/api/questions/${qId}/answers/${ansId}/comment`,
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -318,7 +318,7 @@ const Common = () => {
   const fetchAllQuestions = async () => {
     try {
       if (!token) return setQuestions([]);
-      const res = await axios.get('https://crowdsolve-1-2pvf.onrender.com/api/questions/all', {
+      const res = await axios.get('https://crowd-solve-sepia.vercel.app/api/questions/all', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setQuestions(res.data);
@@ -337,7 +337,7 @@ const Common = () => {
     if (!text || !text.trim()) return;
     try {
       await axios.post(
-        `https://crowdsolve-1-2pvf.onrender.com/api/questions/${qId}/answer`,
+        `https://crowd-solve-sepia.vercel.app/api/questions/${qId}/answer`,
         { answer: text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -352,7 +352,7 @@ const Common = () => {
   const handleLikeAnswer = async (qId, ansId) => {
     try {
       await axios.post(
-        `https://crowdsolve-1-2pvf.onrender.com/api/questions/${qId}/answers/${ansId}/like`,
+        `https://crowd-solve-sepia.vercel.app/api/questions/${qId}/answers/${ansId}/like`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -369,7 +369,7 @@ const Common = () => {
     if (!text) return;
     try {
       await axios.post(
-        `https://crowdsolve-1-2pvf.onrender.com/api/questions/${qId}/answers/${ansId}/comment`,
+        `https://crowd-solve-sepia.vercel.app/api/questions/${qId}/answers/${ansId}/comment`,
         { text },
         { headers: { Authorization: `Bearer ${token}` } }
       );
